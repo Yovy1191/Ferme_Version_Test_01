@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ th:with="lang=${#locale.language}" th:lang="${lang}"
+ manifest="/offline.manifest">
+<head lang="fr">
+<title>La Ferme 2.0</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+	<div class="container">
+
+		Language : <a href="?lang=en">English</a> | <a href="?lang=fr">French</a>
+		
+		
+<!-- 		<p >${message}</p> -->
+		
+		 <span th:text="${message}" >    </span> 
+
+
+
+		<p>
+			<spring:message code="welcome.greeting" arguments="${startMeeting}" />
+		</p>
+
+	
+
+	</div>
+
+
+	<div class="container">
+		<div class="starter-template">
+			<h1 class="text-center">La Ferme 2.0 - Cgi Version Security</h1>
+			<h2>
+				1. Visit <a th:href="@{/admin}"> Page d'administration (Spring
+					Security protected, Need Admin Role)</a>
+			</h2>
+			<h2>
+				2. Visit <a th:href="@{/user}">Page utilisateur (Spring
+					Security protected, Need User Role)</a>
+			</h2>
+		</div>
+
+	</div>
+
+	<!--/*/ <th:block th:include="Fragments/footer :: footer"></th:block> /*/-->
+
+
+</body>
+</html>

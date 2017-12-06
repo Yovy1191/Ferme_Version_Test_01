@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Animal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+
+
+<body>
+
+
+	<!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+
+	<div class="form-group">
+					<div class="col-sm-12">
+						<select  id="animal"  class="list1">
+					<option th:each="animal : ${listanimal}" th:value="${animal.id}"
+						th:text="${animal.type.nom}" th:selected="${animal.id.equals(1)}" />
+		</select>
+	</div>
+	</div>
+
+<!-- 		<div class="form-group"> -->
+<!-- 		  <div class="col-sm-2"> -->
+<!-- 				<input id="adr" type="text" class="select2 js-state"  /> -->
+<!-- 			</div> -->
+
+<!-- 			<div class="col-sm-9"> -->
+<!-- 				<select id="animal" class="list1" lang="fr"> -->
+<!-- 					<option th:each="animal : ${listanimal}" th:value="${animal.id}" -->
+<!-- 						th:text="${animal.type.nom}" th:selected="${animal.id.equals(1)}" /> -->
+<!-- 				</select> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+
+	<h1 class="text-center">Farm 2.0</h1>
+   
+   <div class="container">
+   <table id="animalTable"
+		class="table table-condensed table-striped table-bordered table-hover">
+		<!-- Header Table -->
+		<thead>
+			<tr>
+				<th scope="row">Id</th>
+				<th id="col1" scope="row"></th>
+				
+				<th scope="row">Nouriture Consomme</th>
+				<th id="col3" scope="row">Adresse</th>
+			</tr>
+		</thead>
+		<tbody>
+
+
+			<th:block th:each="animal : ${listanimal}"
+				th:if="${not #lists.isEmpty(listanimal)}">
+				<tr>
+					<td th:text="${animal.id}">...</td>
+					<td th:text="${animal.type.nom}">...</td>
+					<td th:text="${animal.nourritureConsomme}">...</td>
+					<td colspan="2" th:text="${animal.ferme?.adresse}">...</td>
+				</tr>
+
+			</th:block>
+
+			<th:block th:if="${animal != null}">
+				<tr>
+					<td th:text="${animal.id}">...</td>
+					<td th:text="${animal.type.nom}">...</td>
+					<td th:text="${animal.nourritureConsomme}">...</td>
+					<td colspan="2" th:text="${animal.ferme?.adresse}">...</td>
+				</tr>
+
+			</th:block>
+
+		</tbody>
+	</table>
+   
+   </div>
+   
+<div class="container">
+    <form method="post" id="documentAdmin">
+        <div class="form-group">
+            <label for="metals">Metals:</label>
+            <select id="metals" name="metals" class="form-control required" aria-required="true" aria-invalid="false">
+                <option></option>
+                <option value="Co">Cobalt</option>
+                <option value="Ni">Nickel</option>
+                <option value="Cu">Copper</option>
+                <option value="Ag">Silver</option>
+                <option value="Au">Gold</option>
+            </select>
+        </div>
+       
+      <input id="animal" class="form-control required"  aria-required="true" aria-invalid="false" /> 
+        
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+   
+	
+	<script th:src="@{/js/DataTableAnimal.js}" type="text/javascript"></script>
+	
+	
+</body>
+
+
+</html>

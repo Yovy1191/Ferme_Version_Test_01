@@ -1,0 +1,15 @@
+CACHE MANIFEST
+#v1
+
+CACHE:
+#Pages
+offline.html
+
+
+#Styles
+static/css/custom.css
+
+
+NETWORK:
+*
+

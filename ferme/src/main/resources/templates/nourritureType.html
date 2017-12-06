@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Type de Nourriture</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<script src="/js/DataTableNourritureType.js"></script>
+
+<body>
+
+<div sec:authorize="hasRole('ADMIN')" >
+	<!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+	<h1 class="text-center">Type de Nourriture - Ferme 2.0</h1>
+	<div class="table-responsive">
+
+		<table id="nourritureTypeTable"
+			class="table table-condensed table-striped table-bordered">
+			<!-- Header Table -->
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nom</th>
+					<th>Velaur nutricionelle</th>
+					<th>Mise a Jour</th>
+					<th>Effacer</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+
+				<th:block th:each="nt : ${types_nourriture}">
+					<tr>
+						<td th:text="${nt.id}">...</td>
+						<td th:text="${nt.nom}">...</td>
+						<td th:text="${nt.valeur_Nutritrionelle}">...</td>
+						<td><p>
+								<button class="btn btn-primary btn-xs edit-btn"  
+									th:value="${nt.id}" data-title="Edit" data-toggle="modal"
+									data-target="#myModal">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</p></td>
+						
+						<td><p>
+								<button class="btn btn-primary btn-xs delete-btn" 
+									th:value="${nt.id}" data-title="delete" data-toggle="modal"	>
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</p></td>	
+						
+					</tr>
+
+				</th:block>
+			</tbody>
+
+		</table>
+
+	</div>
+
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+		data-target="#myModal">Ajouter type nourriture</button>
+
+	<!-- Modal Ajouter -->
+	<div class="modal fade" id="myModal"
+		tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ajouter Type
+						Nourriture</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="form"  th:object="${type_nourriture}"  th:action="@{/nourritureType}" method="post">
+
+						<input type="hidden" th:field="*{id}" />
+
+						<div class="form-group">
+							<label for="recipient-name" class="form-control-label">Nom
+								du nourriture</label> <input type="text"
+								th:field="*{nom}" class="form-control"  />
+						</div>
+
+						<div class="form-group">
+							<label class="form-control-label">Valeur Nutritionelle</label> <input
+								type="text" th:field="*{valeur_Nutritrionelle}"
+								class="form-control" />
+						</div>
+
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Ajouter</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	</div>	
+	<script>
+	(function($) {
+			var $form = $('#form');
+			$form.on('submit', function(e) {
+				e.preventDefault();
+				($form).validate({
+					errorClass : "my-error-class",
+					validClass : "my-valid-class",
+					rules : {
+						nom : {
+							required : true,
+							minlength : 2,
+							lettersonly : true
+		
+						},
+						valeur_Nutritrionelle : {
+							required : true,
+		
+						},
+		
+					},
+					messages : {
+						nom : "Le nom est obligatoire",
+						valeur_Nutritrionelle : "La valeur nutritionelle est obligatoire"
+					},
+		
+				});
+
+				if ($form.valid()) {
+					$.ajax({
+						url : $form.attr('action'),
+						type : 'post',
+						dataType: 'jsonp',
+						data : $form.serialize(),
+						success : function() {
+							swal({
+								icon : "success",
+								text : 'Type de Nourriture ajouté avec succès',
+								timer : 3000
+		
+							});
+							// Reaload page avec le neuf type de nourriture
+							$('#myModal').on('hidden.bs.modal',function() {
+								location.reload();
+							});
+		
+							setTimeout(function() {
+								$('#myModal').modal('hide');
+							}, 3000);
+		
+						}
+					});
+				}
+			});
+		}(jQuery));
+		
+
+		$('.edit-btn').click(
+				function() {
+					$.ajax({
+						url : "/nourritureType/" + $(this).attr("value"),
+						success : function(data) {
+							console.log(data);
+							$('#id').val(data.id);
+							$('#nom').val(data.nom);
+							$('#valeur_Nutritrionelle').val(data.valeur_Nutritrionelle);
+							$("#EditmyModal").modal("show");
+						}
+
+					});
+
+				});
+		
+		
+		
+		
+	 $('.delete-btn').click(
+				function() {
+					var typenourritureid = $(this).attr("value");
+					swal({
+						  title: 'Êtes-vous sûr?',
+						  text: "Vous ne pourrez pas revenir à cela!!",
+						  type: 'warning',
+						  showCancelButton: true,
+						  confirmButtonColor: '#3085d6',
+						  cancelButtonColor: '#d33',
+						  confirmButtonText: 'Yes, delete it!'
+						}).then(function () {
+							$.ajax({
+								url : "/nourritureType/" + typenourritureid,
+					     		success : function(reponse) {
+			     		
+					     			 if (reponse == "true") {
+					     				swal(
+											    'Deleted!',
+											    'Your file has been deleted.',
+											    'success'
+											   
+											  )
+					                     location.reload(true);
+					                 } else {
+						     				swal(
+												    'Impossible!',
+												    'lie a quelque chose',
+												    'danger'
+												   
+												  )
+					                 }
+					     	           
+								}
+							});
+								
+								})
+		
+						 
+				});
+		
+	</script>
+
+</body>
+
+
+</html>
+
+
+

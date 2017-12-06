@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Liste Ferme</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+<body>
+
+	<div class="container">
+    
+    
+    <!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+
+	<h1 class="text-center">Ferme 2.0</h1>
+
+	<form>
+		<table  id="fermeTable"
+			class="table table-condensed table-striped table-bordered table-hover">
+			<!-- Header Table -->
+			<thead>
+				<tr>
+					<th scope="row">Id Ferme</th>
+					<th scope="row">Adresse</th>
+					<th scope="row">Nom Fermier</th>
+					<th scope="row">Animaux</th>
+				</tr>
+			</thead>
+			<th:block th:each="ferme : ${fermes}">
+				<tr>
+					<td th:text="${ferme.id}">...</td>
+					<td th:text="${ferme.adresse}">...</td>
+					<td th:text="${ferme.fermier?.nom}">...</td>
+					<td>
+						<ul>
+							<th:block th:each="animal : ${ferme.animaux}">
+								<li th:text="${animal.type.nom}"></li>
+								<li th:text="${animal.nourritureConsomme}">...</li>
+								<ul>
+									<th:block th:each="nourritureAnimal : ${animal.nourriture}">
+										<li
+											th:text="${nourritureAnimal.id.nourriture.nourrituretype.nom}">...</li>
+										<li th:text="${nourritureAnimal.quantite}">...</li>
+									</th:block>
+								</ul>
+							</th:block>
+						</ul>
+					</td>
+
+				</tr>
+
+			</th:block>
+		</table>
+
+		<div class="form-group">
+			<a th:href="@{/}" class="btn btn-primary" role="button  center-block">Sortir</a>
+
+		</div>
+	</form>
+
+</div>
+
+
+
+
+
+</body>
+</html>

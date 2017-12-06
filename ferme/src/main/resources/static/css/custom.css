@@ -1,0 +1,25 @@
+.my-error-class {
+    color:red;
+}
+.my-valid-class {
+    color:green;
+}
+
+
+h1{
+	color:#0000FF;
+}
+
+h2{
+	color:#FF0000;
+}
+
+footer{
+    margin-top:60px;
+}
+
+
+.has-error .select2 {
+    border: 1px solid #a94442;
+    border-radius: 4px;
+}

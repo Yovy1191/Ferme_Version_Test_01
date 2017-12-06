@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Ajouter Animal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+<link href="../static/css/custom.css" th:href="@{css/custom.css}"
+	rel="stylesheet" media="screen" />
+
+<body>
+	<div>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header"></div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="/">Home</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="hero-unit">
+			<h1 class="text-center">Creation- Animal Ferme</h1>
+
+			<h2>Formulaire Animaux de Ferme</h2>
+
+			<div>
+				<form class="form-horizontal" th:object="${Animal}"
+					th:action="@{/ajouterAnimal}" method="post">
+					<input type="hidden" th:field="*{id}" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Animaux</label>
+						<div class="col-sm-10">
+							<select class="form-control" th:field="*{type.id}">
+								<option th:each="animal : ${animaux}"
+									th:value="${animal.type.id}" th:text="${animal.type.nom}"
+									th:selected="${animal.type.id.equals(1)}" />
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">quantite nourriture
+							consomme</label> <input type="text" th:field="*{nourritureConsomme}" />
+
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Nourriture</label>
+						<div class="col-sm-10">
+							<select class="form-control">
+								<option th:each="n : ${nourriture}" th:value="${n.id}"
+									th:text="${n.nom}" th:selected="${n.id.equals(1)}" />
+							</select>
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col-md-2 col-md-offset-5">
+							<button type="submit" class="btn btn-default">Save
+								Animal</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

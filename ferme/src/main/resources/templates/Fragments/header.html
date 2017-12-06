@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+ th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+ 
+ 
+</head>
+<body>
+
+
+<div class="container"  >
+    <div th:fragment="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                
+                <div class="container">
+
+		Language : <a href="?lang=en">English</a> | <a href="?lang=fr">French</a>
+
+<!-- 		<p>${message}</p> -->
+
+		<p>
+			<spring:message code="welcome.greeting" arguments="${startMeeting}" />
+		</p>
+
+	
+
+	</div>
+              
+                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+                       <ul class="nav navbar-nav">
+                      	<li class="active"><a th:href="@{/ajouterFerme}" sec:authorize="hasAnyRole('ADMIN')">Add Farm</a></li>
+						<li class="active"><a th:href="@{/nourrirAnimal}" sec:authorize="hasAnyRole('ADMIN')" >Feed the animals</a></li>
+						<li class="active"><a th:href="@{/ferme}" sec:authorize="hasAnyRole('ADMIN', 'USER')">list of farms</a></li>
+                      	<li class="active"><a th:href="@{/animal}" sec:authorize="hasAnyRole('ADMIN', 'USER')">List of animals</a></li>
+						<li class="active"><a th:href="@{/fermier}" sec:authorize="hasAnyRole('ADMIN', 'USER')">Farm list</a></li>
+						<li class="active"><a th:href="@{/nourriture}" sec:authorize="hasAnyRole('ADMIN', 'USER')">Food available</a></li>
+						<li class="active"><a th:href="@{/nourritureType}" sec:authorize="hasAnyRole('ADMIN')">Food </a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+       
+    </div>
+</div>
+</body>
+</html>

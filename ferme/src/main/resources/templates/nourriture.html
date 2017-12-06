@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Nourriture</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+</head>
+
+<script src="/js/DataTableNourriture.js"></script>
+
+<body>
+	<!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+	<h1 class="text-center">Nourriture - Ferme 2.0</h1>
+	<table id="nourritureTable"
+		class="table table-condensed table-striped table-bordered table-hover">
+		<!-- Header Table -->
+		<thead>
+			<tr>
+				<th scope="row">Id</th>
+				<th scope="row">Nom</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<th:block th:each="nourriture : ${listnourriture}">
+				<tr>
+					<td th:text="${nourriture.id}">...</td>
+					<td th:text="${nourriture.nourrituretype?.nom}">...</td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+	
+	
+	
+	  
+
+
+ <form id="myForm">
+      <select name="country" id="country" style="width:200px">
+        <option value=""></option>
+        <option value="US">United States</option>
+        <option value="CA">Canada</option>
+      </select>
+      
+       
+	<input id="animal" class="form-control required"   aria-required="true" aria-invalid="false" /> 
+	
+	<input type= "button" id="a" onclick="dofunction();" class="select2 js-states required"   />
+      
+      <button type="submit">Go</button>
+    </form>
+	
+ <script src="/js/script.js"></script>
+
+</body>
+</html>

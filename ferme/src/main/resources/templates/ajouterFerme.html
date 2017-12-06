@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Creation Ferme</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+<body>
+
+	<div class="container" sec:authorize="hasRole('ADMIN')" >
+		<!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+		<h2 class="text-center">Formulaire Ferme</h2>
+
+		<form id="ajouterferme" class="form-horizontal"
+			th:action="@{/ajouterFerme}" method="post">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Information - Fermier</h3>
+				</div>
+				<span>&nbsp;</span> <span>&nbsp;</span> <input type="hidden"
+					th:field="${fermier.id}" />
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Nom:</label>
+					<div class="col-sm-10">
+						<input  type="text" class="form-control" th:field="${fermier.nom}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Age</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" th:field="${fermier.age}" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="panel panel-primary">
+
+				<span>&nbsp;</span> <span>&nbsp;</span> <input type="hidden"
+					th:field="*{ferme.id}" />
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Adresse</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							th:field="${ferme.adresse}" />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary center-block btn-lg">Ajouter
+					la ferme</button>
+			</div>
+		</form>
+	</div>
+
+	<script>
+
+	
+		jQuery.validator.setDefaults({
+			debug : false,
+			success : "valid"
+		});
+		var validator = $("#ajouterferme").validate({
+			errorClass : "my-error-class",
+			validClass : "my-valid-class",
+			rules : {
+				nom : {
+					  required   : true,
+				 	   minlength  : 2,
+					  lettersonly: true
+					  	
+				},
+				age : {
+					  required   : true,
+					  digits     : true,
+					  rangelength: [2, 2]
+				},
+				adresse : {
+					 required    : true,
+					 rangelength: [2, 50]
+				     
+				},
+
+			},
+
+			submitHandler : function(form) {
+				form.submit();
+			}
+		});
+		
+		jQuery.validator.addMethod("lettersonly", function(value, element) {
+		    return this.optional(element) || /^[a-z\s]+$/i.test(value);
+		}, "Seuls les caractères alphabétiques"); 
+		
+		$("#nom").rules('add', { messages: {required: "Le nom est obligatoire"}});
+		$("#age").rules('add', { messages: {required: "L'age est obligatoire"}});
+		$("#adresse").rules('add', {messages: {required: "L'adresse est obligatoire"}});
+		
+	
+		
+		
+	</script>
+</body>
+</html>
+
+
+
+

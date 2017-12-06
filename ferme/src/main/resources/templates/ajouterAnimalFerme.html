@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="fr">
+<title>La Ferme 2.0 - Ajouter Animal Ferme</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<!--/*/ <th:block th:include="Fragments/headerinc :: head"></th:block> /*/-->
+
+<body>
+
+	<div class="container"   sec:authorize="hasRole('ADMIN')" >
+
+		<div class="container">
+			<!--/*/ <th:block th:include="Fragments/header :: header"></th:block> /*/-->
+
+			<h1 class="text-center">Ajouter des animaux à la ferme</h1>
+
+			<span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span>
+
+			<form class="form-horizontal" th:object="${ferme}"
+				th:action="@{/ajouterAnimalFerme}" method="post">
+
+				<table
+					class="table table-condensed table-striped table-bordered table-hover">
+					<!-- Header Table -->
+					<thead>
+						<tr>
+							<th scope="row">Id Ferme</th>
+							<th scope="row">Adresse</th>
+							<th scope="row">Nom Fermier</th>
+							<th scope="row">Animaux</th>
+						</tr>
+					</thead>
+					<th:block th:each="ferme : ${ferme}">
+						<tr>
+							<td th:text="${ferme.id}">...</td>
+							<td th:text="${ferme.adresse}">...</td>
+							<td th:text="${ferme.fermier?.nom}">...</td>
+							<td>
+								<ul>
+									<th:block th:each="animal : ${ferme.animaux}">
+										<li th:text="${animal.type.nom}">...</li>
+										<li th:text="${animal.nourritureConsomme}">...</li>
+										<ul>
+											<th:block th:each="nourritureAnimal : ${animal.nourriture}">
+												<li
+													th:text="${nourritureAnimal.id.nourriture.nourrituretype.nom}">...</li>
+												<li th:text="${nourritureAnimal.quantite}">...</li>
+											</th:block>
+										</ul>
+									</th:block>
+								</ul>
+							</td>
+						</tr>
+
+					</th:block>
+
+				</table>
+
+				<div class="panel panel-primary">
+
+					<div class="panel-heading">
+						<h3 class="panel-title"></h3>
+					</div>
+
+					<span>&nbsp;</span> <span>&nbsp;</span> <span>&nbsp;</span>
+
+					<div class="form-group has-warning">
+
+						<label class="col-sm-4 control-label">Liste des Animaux </label>
+						<div class="row col-sm-2">
+							<select class="form-control" name="type_animal_id">
+								<option th:each="animal : ${AnimalPourAjouter}"
+									th:value="${animal.id}" th:text="${animal.nom}"
+									th:selected="${animal.id.equals(1)}" />
+							</select>
+						</div>
+						<input type="hidden" class="form-control" th:value="${id}"
+							name="ferme_id" />
+
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-default" name="action"
+								value="AddPlusAnimals">Ajouter Animal</button>
+						</div>
+
+					</div>
+
+					<div class="container">
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-default" name="action"
+								value="continuer">-- Ajouter Nourriture ---</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+
+	</div>
+
+
+</body>
+</html>
